@@ -1,15 +1,22 @@
 import sqlite3
-import requests
+#import requests
 import time
-from config import DB_PATH, REQUEST_DELAY
+from selenium import webdriver
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.service import Service
+from utils.config import DB_PATH, REQUEST_DELAY, BASE_URL
+
 
 def get_connection():
     # Checks the connection of the db from DB_PATH specified in config.py
     con = sqlite3.connect(DB_PATH)
+    con.execute('PRAGMA foreign_keys = ON')
     return con
 
 def make_request(url):
     time.sleep(REQUEST_DELAY)
-    headers = {'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:122.0) Gecko/20100101 Firefox/122.0'}
-    r = requests.get(url)
-    return r if r.status_code == 200 else None
+    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+    driver.get(url)
+    html = driver.page_source
+    driver.quit()
+    return html
