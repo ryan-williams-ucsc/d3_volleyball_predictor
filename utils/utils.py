@@ -4,7 +4,7 @@ import time
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
-from utils.config import DB_PATH, REQUEST_DELAY, BASE_URL
+from utils.config import DB_PATH, REQUEST_DELAY
 
 
 def get_connection():
@@ -15,7 +15,10 @@ def get_connection():
 
 def make_request(url):
     time.sleep(REQUEST_DELAY)
-    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+    # Run in --headless mode so it doesnt keep opening windows
+    options = webdriver.ChromeOptions()
+    options.add_argument('--headless')
+    driver = webdriver.Chrome(options=options, service=Service(ChromeDriverManager().install()))
     driver.get(url)
     html = driver.page_source
     driver.quit()

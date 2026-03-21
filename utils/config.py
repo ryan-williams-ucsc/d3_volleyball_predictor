@@ -1,5 +1,4 @@
 # Base URL for stats.ncaa.org
-BASE_URL = 'https://stats.ncaa.org/'
 SCOREBOARD_URL = 'https://stats.ncaa.org/season_divisions/{division_id}/livestream_scoreboards?utf8=%E2%9C%93&season_division_id=&game_date={date}&conference_id=0&tournament_id=&commit=Submit'
 BOXSCORE_URL = 'https://stats.ncaa.org/contests/{match_id}/box_score'
 # Database path
